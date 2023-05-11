@@ -1,5 +1,7 @@
 import 'package:contri/UI/Landing_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'UI/HomePage.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));

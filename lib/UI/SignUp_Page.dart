@@ -2,13 +2,58 @@ import 'package:contri/UI/OTP_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:contri/Components/BarWidget.dart';
-import '';
+import 'package:http/http.dart' as http;
+import 'package:contri/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUp_Page extends StatelessWidget {
+import 'OTPInput_Screen.dart';
+
+class SignUp_Page extends StatefulWidget {
   SignUp_Page({Key? key}) : super(key: key);
 
+  @override
+  State<SignUp_Page> createState() => _SignUp_PageState();
+}
+
+class _SignUp_PageState extends State<SignUp_Page> {
   final Uri Website = Uri(path: "https://www.contri.co.in/");
-  TextEditingController PhoneNumber = TextEditingController();
+
+  var url = Uri.parse("https://dummyjson.com/http/200/OtpSent");
+  var requestBody = {"Mobile": kPhoneNumberController.text};
+  bool isButtonEnabled = false;
+
+  void OnTextChange()
+  {
+    setState(() {
+      isButtonEnabled = kPhoneNumberController.text.length == 10;
+    });
+  }
+
+  void OnButtonPress()
+  async {
+    {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(kPhoneNumberController.text, "done");
+      print("saved");
+    }
+    {
+      var response = await http.post(url, body: requestBody);
+      if (response.statusCode == 200) {
+        print(response.body);
+        print("Works");
+      }
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>  OTPScreen()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    kPhoneNumberController.addListener(OnTextChange);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,49 +80,44 @@ class SignUp_Page extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Text(
+                  Text(
                     "Your Phone Number",
                     style: TextStyle(
                         fontFamily: "WorkSans",
                         fontSize: 15,
                         color: Colors.grey),
-                  ),
+                  ), //Your number
                   TextField(
-                    controller: PhoneNumber,
+                    controller: kPhoneNumberController,
                     maxLength: 10,
                     keyboardType: TextInputType.phone,
                     autofocus: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "e.g. (+91 1234567890)",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: UnderlineInputBorder(
                           borderSide:
                               BorderSide(width: 5, color: Colors.purple)),
                     ),
-                  ),
-                  const SizedBox(
+                  ), //Phone number Input field
+                  SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Messages and data rates may apply",
                     style: TextStyle(
                         fontFamily: "WorkSans",
                         fontSize: 20,
                         color: Colors.grey),
-                  ),
-                  const SizedBox(
+                  ), // Data warning
+                  SizedBox(
                     height: 50,
                   ),
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => OTP_Screen()));
-                      },
+                      onPressed: isButtonEnabled ? OnButtonPress: null,
                       style: TextButton.styleFrom(
                           // fixedSize: const Size(double.infinity, 40),
-                          minimumSize: Size.fromHeight(50),
+                          minimumSize: const Size.fromHeight(50),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular((20))),
                           backgroundColor:
@@ -88,7 +128,7 @@ class SignUp_Page extends StatelessWidget {
                             fontFamily: "WorkSans",
                             fontSize: 15,
                             color: Colors.white),
-                      )),
+                      )), //Next Button
                 ],
               ), //Phone number input field and Next button
             ],

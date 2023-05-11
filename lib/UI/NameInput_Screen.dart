@@ -1,11 +1,18 @@
 import 'package:contri/Components/BarWidget.dart';
 import 'package:contri/UI/HomePage.dart';
+import 'package:contri/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Name_Screen extends StatelessWidget {
   Name_Screen({Key? key}) : super(key: key);
 
-  final TextEditingController NameController = TextEditingController();
+  var url = Uri.parse("https://dummyjson.com/http/200/UserAdded");
+  var requestBody = {
+    "Mobile": kPhoneNumberController.text,
+    "Name": NameController.text
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +23,12 @@ class Name_Screen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const BarWidget(),
+              const BarWidget(), //TopBar
               const SizedBox(height: 50),
               const Text(
                 "Enter your Name",
                 style: TextStyle(fontFamily: "WorkSans", fontSize: 25),
-              ),
+              ), //Enter your name
               const SizedBox(height: 50),
               TextField(
                 keyboardType: TextInputType.name,
@@ -35,21 +42,27 @@ class Name_Screen extends StatelessWidget {
                     filled: true,
                     fillColor: Colors.grey,
                     border: OutlineInputBorder()),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
+              ), //Name input
+              const SizedBox(height: 50),
               const Text(
                 "Please note that this name will be visible in all pools that you are a part of.",
                 style: TextStyle(fontFamily: "WorkSans", fontSize: 22),
-              ),
-              SizedBox(
-                height: 50,
-              ),
+              ), //Description
+              SizedBox(height: 50),
               TextButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                  onPressed: () async {
+                    {
+                      var response = await http.post(url, body: requestBody);
+                      if(response.statusCode ==200)
+                        {
+                          print(response.body);
+                          print("yay, The name page works");
+                        }
+                    }
+                    {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }
                   },
                   style: TextButton.styleFrom(
                       // fixedSize: const Size(double.infinity, 40),
@@ -63,7 +76,7 @@ class Name_Screen extends StatelessWidget {
                         fontFamily: "WorkSans",
                         fontSize: 20,
                         color: Colors.white),
-                  )),
+                  )), //HomePage Button
             ],
           ),
         ),

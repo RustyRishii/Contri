@@ -15,7 +15,7 @@ class Landing_page extends StatelessWidget {
               Container(
                   padding: const EdgeInsets.all(10),
                   height: 150,
-                  child: Image.asset("Assets/Images/Contri.png")),
+                  child: Image.asset("Assets/Images/Contri.png")), //Image
               const Text(
                 "MONEY \n POOLS \n MADE \n EASY :)",
                 style: TextStyle(
@@ -23,7 +23,7 @@ class Landing_page extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     fontSize: 50,
                     color: Colors.black),
-              ),
+              ), //Money Pools made easy
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -63,7 +63,7 @@ class Landing_page extends StatelessWidget {
                             color: Color.fromRGBO(75, 81, 217, 1)),
                       )), //Login Button
                 ],
-              )
+              ) //Sign up and login button
             ],
           ),
         ),

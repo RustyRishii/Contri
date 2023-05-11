@@ -16,15 +16,15 @@ class HomePage extends StatelessWidget {
               Center(
                   child: Container(
                       height: 200,
-                      child: Image.asset("Assets/Images/Contri.png"))),
+                      child: Image.asset("Assets/Images/Contri.png"))), //Image
               TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Landing_page()));
+                        MaterialPageRoute(builder: (context) => const Landing_page()));
                   },
                   style: TextButton.styleFrom(
                       // fixedSize: const Size(double.infinity, 40),
-                      minimumSize: Size.fromHeight(50),
+                      minimumSize: const Size.fromHeight(50),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular((20))),
                       backgroundColor: const Color.fromRGBO(160, 165, 228, 1)),
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                         fontFamily: "WorkSans",
                         fontSize: 20,
                         color: Colors.white),
-                  )),
+                  )), //Logout button
             ],
           ),
         ),

@@ -1,6 +1,12 @@
 # contri
 
-A new Flutter project.
+Contri Assignment
+
+Screen 1:- LandingPage.dart (lib/UI/Landing_page.dart)
+Screen 2:- SignUp_Page.dart (lib/UI/SignUp_Page.dart)
+Screen 3:- OTP_Screen.dart (lib/UI/OTP_Screen.dart)
+Screen 4:- Name_Screen.dart (lib/UI/Name_Screen.dart)
+Screen 5:- HomePage.dart (lib/UI/HomePage.dart)
 
 ## Getting Started
 

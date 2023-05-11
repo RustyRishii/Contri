@@ -17,10 +17,10 @@ class BarWidget extends StatelessWidget {
               child: Image.asset(
                 "Assets/Images/Contri.png",
                 width: 50,
-              )),
+              )), //Image
           GestureDetector(
               onTap: () {
-                launchUrl("Contri.co.in" as Uri);
+                launchUrl((Uri.parse("Contri.co.in")));
               },
               child: const Text("What is Contri?",
                   style: TextStyle(
@@ -28,7 +28,7 @@ class BarWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontFamily: "WorkSans",
                     color: Color.fromRGBO(75, 81, 217, 1),
-                  ))),
+                  ))), //"What is Contri"
         ],
       ),
     );
