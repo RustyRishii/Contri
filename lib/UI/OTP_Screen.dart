@@ -4,10 +4,10 @@
   import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
   import 'package:http/http.dart' as http;
   import 'package:contri/constants.dart';
-  
+
   class OTP_Screen extends StatelessWidget {
     OTP_Screen({Key? key}) : super(key: key);
-  
+
     var url = Uri.parse("https://dummyjson.com/http/200/Verified");
 
     @override
@@ -16,9 +16,7 @@
         child: Scaffold(
           body: Container(
             margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
               children: <Widget>[
                 BarWidget(),
                 SizedBox(
