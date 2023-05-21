@@ -18,7 +18,7 @@ class SignUp_Page extends StatefulWidget {
 class _SignUp_PageState extends State<SignUp_Page> {
   final Uri Website = Uri(path: "https://www.contri.co.in/");
 
-  var url = Uri.parse("https://dummyjson.com/http/200/OtpSent");
+  var url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
   var requestBody = {"Mobile": kPhoneNumberController.text};
   bool isButtonEnabled = false;
 
@@ -32,21 +32,26 @@ class _SignUp_PageState extends State<SignUp_Page> {
   void OnButtonPress()
   async {
     {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(kPhoneNumberController.text, "done");
-      print("saved");
-    }
-    {
-      var response = await http.post(url, body: requestBody);
-      if (response.statusCode == 200) {
-        print(response.body);
-        print("Works");
+      {
+        final SharedPreferences PhonePreferences = await SharedPreferences.getInstance();
+        PhonePreferences.setString("PhoneNumber", kPhoneNumberController.text);
+      }
+      {
+        var response = await http.post(url, body: requestBody);
+        if (response.statusCode == 200) {
+          print(response.body);
+          print("Works");
+        }
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>  OTPScreen()));
       }
     }
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>  OTPScreen()));
+    {
+      print("saved");
+    }
   }
 
   @override
