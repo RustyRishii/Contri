@@ -1,4 +1,5 @@
 import 'package:contri/UI/Landing_page.dart';
+import 'package:contri/notificationService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,11 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    notificationServices.initializeNotifications();
   }
 
   @override
@@ -75,7 +78,11 @@ class _HomePageState extends State<HomePage> {
                       height: 50,
                       width: 300,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            notificationServices.sendNotification(
+                                "Action required",
+                                "This is a body description");
+                          },
                           style: TextButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular((20))),
@@ -91,7 +98,36 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 50,),
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 50,
+                      width: 300,
+                      child: TextButton(
+                          onPressed: () {
+                            notificationServices.scheduleNotification(
+                                "This is a",
+                                "Schedule notification");
+                          },
+                          style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular((20))),
+                              backgroundColor:
+                              const Color.fromRGBO(160, 165, 228, 1)),
+                          child: const Text(
+                            "Scheduled Notification",
+                            style: TextStyle(
+                                fontFamily: "WorkSans",
+                                fontSize: 20,
+                                color: Colors.white),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
